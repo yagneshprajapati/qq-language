@@ -1,0 +1,543 @@
+program         : statements
+
+statements      : statement
+                | statements statement
+
+statement       : variable_declaration
+                | assignment_statement
+                | print_statement
+                | if_statement
+                | while_statement
+                | function_declaration
+                | for_statement
+                | return_statement
+                | try_statement
+                | throw_statement
+
+variable_declaration : 'var' IDENTIFIER ('=' expression)? ';'
+
+assignment_statement : IDENTIFIER ('[' expression ']')? '=' expression ';'
+
+print_statement : 'print' expression ';'
+
+if_statement    : 'if' comparison_expression '{' statements '}' ('else' '{' statements '}')?
+
+while_statement : 'while' comparison_expression '{' statements '}'
+
+function_declaration : 'function' IDENTIFIER '(' parameters ')' '{' statements '}'
+
+parameters      : IDENTIFIER (',' IDENTIFIER)*
+
+comparison_expression : expression (comparison_operator expression)*
+
+expression      : term (addition_operator term)*
+
+term            : factor (multiplication_operator factor)*
+
+factor          : NUMBER
+                | STRING
+                | BOOLEAN
+                | IDENTIFIER
+                | '(' expression ')'
+                | function_call
+                | array_expression
+                | object_expression
+
+array_expression : '[' (expression (',' expression)*)? ']'
+
+object_expression : '{' (property (',' property)*)? '}'
+
+property        : IDENTIFIER ':' expression
+
+function_call   : IDENTIFIER '(' arguments ')'
+
+arguments       : expression (',' expression)*
+
+comparison_operator : '==' | '!=' | '<' | '<=' | '>' | '>='
+
+addition_operator : '+' | '-'
+
+multiplication_operator : '*' | '/'
+
+IDENTIFIER      : (letter | '_') (letter | digit | '_')*
+
+NUMBER          : digit+ ('.' digit+)? (('e' | 'E') ('+' | '-')? digit+)?
+
+STRING          : '"' (letter | digit | ' ')* '"'
+
+BOOLEAN         : 'true' | 'false'
+
+letter          : 'a'..'z' | 'A'..'Z'
+
+digit           : '0'..'9'
+
+for_statement   : 'for' '(' variable_declaration? ';' comparison_expression? ';' assignment_statement? ')' '{' statements '}'
+
+return_statement: 'return' expression? ';'
+
+try_statement   : 'try' '{' statements '}' catch_statement
+
+catch_statement : 'catch' '(' IDENTIFIER ')' '{' statements '}'
+
+throw_statement : 'throw' expression ';'
+
+class_declaration : 'class' IDENTIFIER ('extends' IDENTIFIER)? '{' class_body '}'
+
+class_body      : (member_declaration)*
+
+member_declaration : function_declaration | variable_declaration
+
+instance_method_declaration : function_declaration
+
+static_method_declaration : 'static' function_declaration
+
+method_call     : expression '.' IDENTIFIER '(' arguments ')'
+
+super_call      : 'super' '.' IDENTIFIER '(' arguments ')'
+
+constructor_declaration : 'constructor' '(' parameters ')' '{' statements '}'
+
+this_reference  : 'this'
+
+null_literal    : 'null'
+
+interface_declaration : 'interface' IDENTIFIER '{' interface_members '}'
+
+interface_members : (interface_method_declaration)*
+
+interface_method_declaration : function_declaration
+
+enum_declaration : 'enum' IDENTIFIER '{' enum_constants '}' 
+
+enum_constants  : IDENTIFIER (',' IDENTIFIER)*
+
+annotation_declaration : '@' IDENTIFIER
+
+stack_declaration : 'stack' '<' type '>' IDENTIFIER ';'
+
+stack_operation_push : IDENTIFIER '.push(' expression ')' ';'
+
+stack_operation_pop : IDENTIFIER '.pop();'
+
+queue_declaration : 'queue' '<' type '>' IDENTIFIER ';'
+
+queue_operation_add : IDENTIFIER '.add(' expression ')' ';'
+
+queue_operation_remove : IDENTIFIER '.remove();'
+
+dictionary_declaration : 'dict' '<' key_type ',' value_type '>' IDENTIFIER ';'
+
+dictionary_operation_set : IDENTIFIER '[' key_expression ']' '=' value_expression ';'
+
+dictionary_operation_get : IDENTIFIER '[' key_expression ']' ';'
+
+dictionary_operation_contains_key : IDENTIFIER '.containsKey(' key_expression ')' ';'
+
+list_declaration : 'list' '<' type '>' IDENTIFIER ';'
+
+list_operation_add : IDENTIFIER '.add(' expression ')' ';'
+
+list_operation_remove : IDENTIFIER '.remove(' expression ')' ';'
+
+set_declaration : 'set' '<' type '>' IDENTIFIER ';'
+
+set_operation_add : IDENTIFIER '.add(' expression ')' ';'
+
+set_operation_remove : IDENTIFIER '.remove(' expression ')' ';'
+
+try_with_resources_statement : 'try' '(' resources ')' '{' statements '}' catch_statement? finally_statement?
+
+resources : variable_declaration (',' variable_declaration)*
+
+finally_statement : 'finally' '{' statements '}'
+
+lambda_declaration : '(' parameters ')' '=>' expression
+
+partial_function_application : expression '(' arguments ')' ';'
+
+decorator_declaration : '@' IDENTIFIER '(' arguments ')'
+
+in_operator : expression 'in' expression
+
+not_in_operator : expression 'not' 'in' expression
+
+is_operator : expression 'is' expression
+
+is_not_operator : expression 'is' 'not' expression
+
+assert_statement : 'assert' expression (',' STRING)? ';'
+
+with_statement : 'with' '(' expression ('as' IDENTIFIER)? ')' '{' statements '}'
+
+yield_statement : 'yield' expression ';'
+
+yield_from_statement : 'yield' 'from' expression ';'
+
+async_function_declaration : 'async' function_declaration
+
+await_expression : 'await' expression
+
+async_with_statement : 'async' 'with' '(' expression ('as' IDENTIFIER)? ')' '{' statements '}'
+
+async_for_statement : 'async' 'for' '(' variable_declaration? 'in' expression ')' '{' statements '}'
+
+async_with_statement : 'async' 'with' '(' expression ('as' IDENTIFIER)? ')' '{' statements '}'
+
+async_yield_statement : 'async' 'yield' expression ';'
+
+async_yield_from_statement : 'async' 'yield' 'from' expression ';'
+list' '<' type '>' IDENTIFIER ';'
+
+list_operation_add : IDENTIFIER '.add(' expression ')' ';'
+
+list_operation_remove : IDENTIFIER '.remove(' expression ')' ';'
+
+set_declaration : 'set' '<' type '>' IDENTIFIER ';'
+
+set_operation_add : IDENTIFIER '.add(' expression ')' ';'
+
+set_operation_remove : IDENTIFIER '.remove(' expression ')' ';'
+
+try_with_resources_statement : 'try' '(' resources ')' '{' statements '}' catch_statement? finally_statement?
+
+resources : variable_declaration (',' variable_declaration)*
+
+finally_statement : 'finally' '{' statements '}'
+
+lambda_declaration : '(' parameters ')' '=>' expression
+
+partial_function_application : expression '(' arguments ')' ';'
+
+decorator_declaration : '@' IDENTIFIER '(' arguments ')'
+
+in_operator : expression 'in' expression
+
+not_in_operator : expression 'not' 'in' expression
+
+is_operator : expression 'is' expression
+
+is_not_operator : expression 'is' 'not' expression
+
+assert_statement : 'assert' expression (',' STRING)? ';'
+
+with_statement : 'with' '(' expression ('as' IDENTIFIER)? ')' '{' statements '}'
+
+yield_statement : 'yield' expression ';'
+
+yield_from_statement : 'yield' 'from' expression ';'
+
+async_function_declaration : 'async' function_declaration
+
+await_expression : 'await' expression
+
+async_with_statement : 'async' 'with' '(' expression ('as' IDENTIFIER)? ')' '{' statements '}'
+
+async_for_statement : 'async' 'for' '(' variable_declaration? 'in' expression ')' '{' statements '}'
+
+async_with_statement : 'async' 'with' '(' expression ('as' IDENTIFIER)? ')' '{' statements '}'
+
+async_yield_statement : 'async' 'yield' expression ';'
+
+async_yield_from_statement : 'async' 'yield' 'from' expression ';'
+
+type_alias_declaration : 'typealias' IDENTIFIER '<' type '>' ';'
+
+type_constraint_declaration : 'type' IDENTIFIER ':' type ';'
+
+operator_overloading : 'operator' overload_operator function_declaration
+
+overload_operator : '+' | '-' | '*' | '/' | '%' | '**' | '//' | '|' | '^' | '&' | '~' | '<<' | '>>'
+
+inline_declaration : 'inline' function_declaration
+
+noop_statement : ';'
+
+ternary_expression : expression '?' expression ':' expression
+
+do_while_statement : 'do' '{' statements '}' 'while' '(' expression ')' ';'
+
+jump_statement : 'break' | 'continue'
+
+optional_type_declaration : type '?'
+
+optional_parameter_declaration : IDENTIFIER '?' ':' expression
+
+optional_argument_declaration : IDENTIFIER '=' expression
+
+optional_dictionary_get_declaration : IDENTIFIER '.' 'get' '(' key_expression ')' ','? value_expression?
+
+thread_creation : 'Thread' '(' expression (',' arguments)? ')' '{' statements '}'
+
+thread_join : IDENTIFIER '.join();'
+
+synchronized_statement : 'synchronized' '(' expression ')' '{' statements '}'
+
+array_declaration : 'array' '<' type ',' integer_literal '>' IDENTIFIER ';'
+
+array_operation_set : IDENTIFIER '[' integer_expression ']' '=' expression ';'
+
+array_operation_get : IDENTIFIER '[' integer_expression ']' ';'
+
+array_operation_length : IDENTIFIER '.length' ';'
+
+array_operation_sort : IDENTIFIER '.sort()' ';'
+
+array_operation_reverse : IDENTIFIER '.reverse()' ';'
+
+array_operation_concatenate : IDENTIFIER '.concat(' expression ')' ';'
+
+array_operation_slice : IDENTIFIER '.slice(' integer_expression ',' integer_expression ')' ';'
+
+function_call_statement : function_call ';'
+
+function_call : IDENTIFIER '(' arguments ')'
+
+function_declaration : 'def' IDENTIFIER '(' parameters ')' ('->' type)? '{' statements '}'
+
+parameters : parameter_declaration (',' parameter_declaration)*
+
+parameter_declaration : IDENTIFIER ':' type
+
+arguments : argument_declaration (',' argument_declaration)*
+
+argument_declaration : expression
+
+class_declaration : 'class' IDENTIFIER ('(' IDENTIFIER ')')? '{' class_body '}'
+
+class_body : (variable_declaration | function_declaration)*
+
+class_inheritance_declaration : 'class' IDENTIFIER '(' IDENTIFIER ')' '{' class_body '}'
+
+class_method_declaration : 'classmethod' function_declaration
+
+static_method_declaration : 'staticmethod' function_declaration
+
+property_declaration : 'property' ('(' function_declaration ')')? '{' (variable_declaration | function_declaration)* '}'
+
+interface_declaration : 'interface' IDENTIFIER '{' interface_body '}'
+
+interface_body : function_declaration*
+
+implements_declaration : 'implements' IDENTIFIER (',' IDENTIFIER)*
+
+abstract_method_declaration : 'abstract' function_declaration
+
+abstract_class_declaration : 'abstract' 'class' IDENTIFIER ('(' IDENTIFIER ')')? '{' class_body '}'
+
+public_access_modifier : 'public'
+
+private_access_modifier : 'private'
+
+protected_access_modifier : 'protected'
+
+class_member_access_modifier : public_access_modifier | private_access_modifier | protected_access_modifier
+
+class_variable_declaration : class_member_access_modifier? 'var' IDENTIFIER ':' type ';'
+
+class_constant_declaration : class_member_access_modifier? 'const' IDENTIFIER '=' expression ';'
+
+class_method_call : IDENTIFIER '.' IDENTIFIER '(' arguments ')'
+
+instance_variable_declaration : 'var' IDENTIFIER ':' type '=' expression ';'
+
+instance_constant_declaration : 'const' IDENTIFIER ':' type '=' expression ';'
+
+instance_method_call : IDENTIFIER '.' IDENTIFIER '(' arguments ')'
+
+new_object_creation : 'new' IDENTIFIER '(' arguments ')'
+
+operator_declaration : 'operator' overload_operator '(' parameters ')' ('->' type)? '{' statements '}'
+
+overload_unary_operator : '+' | '-' | '~'
+
+overload_comparison_operator : '<' | '<=' | '>' | '>=' | '==' | '!='
+
+overload_boolean_operator : 'and' | 'or' | 'not'
+
+overload_assignment_operator : '+=' | '-=' | '*=' | '/=' | '%=' | '**=' | '//=' | '|=' | '^=' | '&=' | '<<=' | '>>='
+
+overload_subscript_operator : '__getitem__' | '__setitem__'
+
+overload_iteration_operator : '__iter__' | '__next__'
+
+overload_context_manager_operator : '__enter__' | '__exit__'
+
+overload_call_operator : '__call__'
+
+overload_len_operator : '__len__'
+
+overload_string_conversion_operator : '__str__' | '__repr__'
+
+overload_type_conversion_operator : '__int__' | '__float__' | '__bool__'
+
+type_checking : 'isinstance' '(' expression ',' type ')'
+
+type_casting : 'as' type
+
+type_union : type ('|' type)*
+
+type_intersection : type ('&' type)*
+
+type_difference : type ('-' type)*
+
+type_generic : type '[' type_argument (',' type_argument)* ']'
+
+type_argument : type | wildcard_type
+
+wildcard_type : '?' ('extends' type | 'super' type)
+
+type_array : type '[]'
+
+namespace_declaration : 'namespace' IDENTIFIER '{' namespace_body '}'
+
+namespace_body : (variable_declaration | function_declaration | class_declaration | interface_declaration)*
+
+namespace_import : 'import' IDENTIFIER ('as' IDENTIFIER)?
+
+namespace_alias : 'from' IDENTIFIER 'import' IDENTIFIER ('as' IDENTIFIER)?
+
+namespace_declaration : 'namespace' IDENTIFIER '{' (variable_declaration | function_declaration | class_declaration | interface_declaration)* '}'
+
+namespace_import : 'import' (IDENTIFIER | namespace_alias) (',' (IDENTIFIER | namespace_alias))* ';'
+
+variable_declaration : 'var' IDENTIFIER ':' type '=' expression ';'
+
+constant_declaration : 'const' IDENTIFIER ':' type '=' expression ';'
+
+function_declaration : 'function' IDENTIFIER parameters (':' type)? '{' statements '}'
+
+parameters : '(' (parameter (',' parameter)*)? ')'
+
+parameter : IDENTIFIER (':' type)? ('=' expression)?
+
+class_declaration : 'class' IDENTIFIER ('extends' IDENTIFIER)? ('implements' IDENTIFIER (',' IDENTIFIER)*)? '{' class_members '}'
+
+interface_declaration : 'interface' IDENTIFIER ('extends' IDENTIFIER (',' IDENTIFIER)*)? '{' interface_members '}'
+
+class_members : (class_property_declaration | function_declaration)*
+
+interface_members : (interface_property_declaration | function_declaration)*
+
+class_property_declaration : ('public' | 'protected' | 'private')? ('static')? (variable_declaration | constant_declaration)
+
+interface_property_declaration : (variable_declaration | constant_declaration) (',' variable_declaration | constant_declaration)* ';'
+
+type : IDENTIFIER ('[' type ']')*
+
+conditional_type : type ('|' type)*
+
+generic_type : type '<' type (',' type)* '>'
+
+interface_type : IDENTIFIER ('<' generic_type '>')?
+
+namespace_export : 'export' (variable_declaration | function_declaration | class_declaration | interface_declaration)*
+
+file_declaration : (namespace_declaration | namespace_import)* (variable_declaration | function_declaration | class_declaration | interface_declaration | namespace_export)*
+
+async_function_declaration : 'async' function_declaration
+
+await_expression : 'await' expression
+
+try_catch_statement : 'try' '{' statements '}' catch_clauses
+
+catch_clauses : (catch_clause | finally_clause | catch_clause finally_clause)
+
+catch_clause : 'catch' '(' IDENTIFIER ':' type ')' '{' statements '}'
+
+finally_clause : 'finally' '{' statements '}'
+
+throw_statement : 'throw' expression ';'
+
+assertion_statement : 'assert' expression (',' expression)?
+
+with_statement : 'with' expression ('as' IDENTIFIER)? '{' statements '}'
+
+global_variable_declaration : 'global' IDENTIFIER (',' IDENTIFIER)* ';'
+
+nonlocal_variable_declaration : 'nonlocal' IDENTIFIER (',' IDENTIFIER)* ';'
+
+lambda_expression : 'lambda' parameters ':' expression
+
+decorator : '@' IDENTIFIER ('(' (expression (',' expression)*)? ')')?
+
+pattern_matching : 'match' expression '{' match_cases '}'
+
+match_cases : match_case*
+
+match_case : 'case' pattern (':' statements)?
+
+pattern : value_pattern | sequence_pattern | wildcard_pattern | object_pattern
+
+value_pattern : expression
+
+sequence_pattern : '[' pattern (',' pattern)* ']'
+
+wildcard_pattern : '_'
+
+object_pattern : '{' (property_pattern (',' property_pattern)*)? '}'
+
+property_pattern : IDENTIFIER ':' pattern
+
+expression : literal | identifier | binary_expression | unary_expression | function_call | member_access | subscript_expression | conditional_expression | lambda_expression | list_expression | set_expression | dictionary_expression | tuple_expression | object_creation | attribute_access | type_checking | type_casting | type_union | type_intersection | type_difference | type_generic | await_expression | pattern_matching
+
+literal : NUMBER | STRING | BOOLEAN | NULL
+
+identifier : IDENTIFIER
+
+binary_expression : expression binary_operator expression
+
+binary_operator : '+' | '-' | '*' | '/' | '%' | '**' | '//' | '<<' | '>>' | '&' | '|' | '^' | '==' | '!=' | '<' | '<=' | '>' | '>=' | 'and' | 'or'
+
+unary_expression : unary_operator expression
+
+unary_operator : '+' | '-' | '~' | 'not'
+
+member_access : expression '.' IDENTIFIER
+
+subscript_expression : expression '[' expression (',' expression)? ']'
+
+conditional_expression : expression '?' expression ':' expression
+
+list_expression : '[' (expression (',' expression)*)? ']'
+
+set_expression : '{' (expression (',' expression)*)? '}'
+
+dictionary_expression : '{' ((expression ':' expression) (',' expression ':' expression)*)? '}'
+
+tuple_expression : '(' (expression (',' expression)*)? ','? ')'
+
+object_creation : 'new' IDENTIFIER '(' (expression (',' expression)*)? ')'
+
+attribute_access : expression '@' IDENTIFIER
+
+expression : assignment_expression
+
+assignment_expression : logical_or_expression ('=' assignment_expression)?
+
+logical_or_expression : logical_and_expression ('||' logical_and_expression)*
+
+logical_and_expression : equality_expression ('&&' equality_expression)*
+
+equality_expression : relational_expression (('==' | '!=') relational_expression)*
+
+relational_expression : additive_expression (('<' | '>' | '<=' | '>=') additive_expression)*
+
+additive_expression : multiplicative_expression (('+' | '-') multiplicative_expression)*
+
+multiplicative_expression : unary_expression (('*' | '/' | '%') unary_expression)*
+
+unary_expression : ('+' | '-' | '!' | 'typeof') unary_expression | primary_expression
+
+primary_expression : IDENTIFIER | literal | '(' expression ')' | function_call | object_creation | array_creation
+
+literal : NUMERIC_LITERAL | STRING_LITERAL | 'true' | 'false' | 'null'
+
+function_call : primary_expression '(' arguments? ')'
+
+arguments : expression (',' expression)*
+
+object_creation : 'new' IDENTIFIER '(' arguments? ')'
+
+array_creation : '[' (expression (',' expression)*)? ']'
+
+
